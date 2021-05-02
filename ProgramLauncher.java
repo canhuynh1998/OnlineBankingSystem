@@ -1,4 +1,5 @@
 
+
 /**
  * Main entry to program.
  */
@@ -12,7 +13,7 @@ public class ProgramLauncher {
 		} else {
 			System.out.println("Before init");
 			BankingSystem.init(argv[0]);
-			System.out.println("Done init");
+			System.out.println(argv[0]);
 			BankingSystem.testConnection();
 			System.out.println();
 			BatchInputProcessor.run(argv[0]);
