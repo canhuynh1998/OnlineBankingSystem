@@ -1,13 +1,17 @@
 package SelfBankingSystem.SelfBankingSystem.account;
 
 import SelfBankingSystem.SelfBankingSystem.customer.Customer;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
+
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        columnNames = { "Number", "Id" }
+                )
+        }
+        )
 public class Account {
 
     @Id
@@ -31,7 +35,7 @@ public class Account {
             name="Id",
             nullable = false
     )
-    private Integer id;
+    private Long id;
 
     @Column(
             name="Balance",
@@ -49,7 +53,7 @@ public class Account {
             name="Status",
             nullable = false
     )
-    private Boolean active;
+    private Integer active;
 
 
     @ManyToOne
@@ -59,7 +63,7 @@ public class Account {
 
     public Account(){}
 
-    public Account(Long balance, Integer type, Boolean active, Customer customer) {
+    public Account(Long balance, Integer type, Integer active, Customer customer) {
         this.balance = balance;
         this.type = type;
         this.active = active;
@@ -70,7 +74,7 @@ public class Account {
         return number;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -82,7 +86,7 @@ public class Account {
         return type;
     }
 
-    public Boolean getActive() {
+    public Integer getActive() {
         return active;
     }
 
@@ -95,7 +99,7 @@ public class Account {
         this.number = number;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -107,7 +111,7 @@ public class Account {
         this.type = type;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 

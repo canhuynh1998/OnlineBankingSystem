@@ -5,6 +5,7 @@ import SelfBankingSystem.SelfBankingSystem.account.Account;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -52,8 +53,8 @@ public class Customer {
     )
     private Integer pin;
 
-    @OneToMany(mappedBy = "customer", orphanRemoval = true)
-    private Set<Account> accounts;
+    @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = { CascadeType.ALL})
+    private List<Account> accounts;
 
     public Customer() {}
 
@@ -89,7 +90,7 @@ public class Customer {
         this.pin = pin;
     }
 
-    public void setAccounts(Set<Account> accounts) {
+    public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
     }
 
@@ -118,7 +119,7 @@ public class Customer {
         return pin;
     }
 
-    public Set<Account> getAccounts() {
+    public List<Account> getAccounts() {
         return accounts;
     }
 
