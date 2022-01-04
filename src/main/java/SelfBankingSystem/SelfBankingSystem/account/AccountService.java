@@ -42,19 +42,16 @@ public class AccountService {
 
         Long accountBalance = account.getBalance();
         Integer accountType = account.getType();
-        Integer accountStatus = account.getActive();
+
         if(accountBalance < 0){
             throw new IllegalStateException("Insufficient Fund!");
         }
 
-        if(accountType != 0 || accountType != 1){
-            throw new IllegalStateException("Invalid Account Type!");
-        }
+//        if(!(accountType == 0 && accountType == 1)){
+//            throw new IllegalStateException("Invalid Account Type!");
+//        }
 
-        if(accountStatus != 0 || accountType != 1){
-            throw new IllegalStateException("Invalid Account Status!");
-        }
-
+        account.setCustomer(targetCustomer);
         targetCustomer.getAccounts().add(account);
         accountRepository.save(account);
 

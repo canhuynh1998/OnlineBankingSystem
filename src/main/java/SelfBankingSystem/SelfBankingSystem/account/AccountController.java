@@ -22,7 +22,7 @@ public class AccountController {
 
     @PostMapping(path="customer/{customerId}/accounts")
     public void createAccount(@PathVariable(value="customerId") Long customerId,
-                              @RequestParam(required = true) Account account){
+                              @RequestBody Account account){
         accountService.createAccount(customerId, account);
     }
 }

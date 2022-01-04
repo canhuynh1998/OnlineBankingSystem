@@ -54,7 +54,7 @@ public class Customer {
     private Integer pin;
 
     @OneToMany(mappedBy = "customer", orphanRemoval = true, cascade = { CascadeType.ALL})
-    private List<Account> accounts;
+    private Set<Account> accounts;
 
     public Customer() {}
 
@@ -90,7 +90,7 @@ public class Customer {
         this.pin = pin;
     }
 
-    public void setAccounts(List<Account> accounts) {
+    public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
 
@@ -119,7 +119,7 @@ public class Customer {
         return pin;
     }
 
-    public List<Account> getAccounts() {
+    public Set<Account> getAccounts() {
         return accounts;
     }
 

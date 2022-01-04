@@ -47,13 +47,13 @@ public class Account {
             name="Type",
             nullable = false
     )
-    private Integer type; // 0: checking, 1: saving
+    private Integer type = 1; // 0: checking, 1: saving
 
     @Column(
             name="Status",
             nullable = false
     )
-    private Integer active;
+    private Integer active = 1;
 
 
     @ManyToOne
@@ -63,10 +63,9 @@ public class Account {
 
     public Account(){}
 
-    public Account(Long balance, Integer type, Integer active, Customer customer) {
+    public Account(Long balance, Integer type, Customer customer) {
         this.balance = balance;
         this.type = type;
-        this.active = active;
         this.customer = customer;
     }
 
