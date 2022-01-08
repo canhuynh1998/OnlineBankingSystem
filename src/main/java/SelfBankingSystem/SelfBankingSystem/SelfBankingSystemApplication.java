@@ -28,13 +28,13 @@ public class SelfBankingSystemApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 
 
-		Account canaccount = new Account(100L,100000L,1);
-		Customer can = new Customer("Can", 'M', LocalDate.of(1998, 6, 3), 306);
-		customerRepo.save(can);
-		canaccount.setCustomer(can);
-
-
-		accountRepo.save(canaccount);
+//		Account canaccount = new Account(100L,100000L,1);
+//		Customer can = new Customer("Can", 'M', LocalDate.of(1998, 6, 3), 306);
+//		customerRepo.save(can);
+//		canaccount.setCustomer(can);
+//
+//
+//		accountRepo.save(canaccount);
 
 		}
 

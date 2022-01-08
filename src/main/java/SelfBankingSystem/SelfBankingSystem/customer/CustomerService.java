@@ -1,31 +1,46 @@
 package SelfBankingSystem.SelfBankingSystem.customer;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.config.CustomEditorConfigurer;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 import static java.lang.Character.toLowerCase;
 
 @Service
-public class CustomerService {
+@AllArgsConstructor
+public class CustomerService implements UserDetailsService {
 
     private final CustomerRepository repo;
-
-    @Autowired
-    public CustomerService(CustomerRepository repo){
-        this.repo = repo;
-    }
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<Customer> getCustomers(){
         return repo.findAll();
     }
 
-    public void addNewCustomer(Customer newCustomer){
+    public Customer getCustomer(Long id){return repo.findById(id).orElseThrow(()->new IllegalStateException("ID not found"));}
+
+    @Override
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        return repo.findByUserName(name).orElseThrow(()->new IllegalStateException("User doesn't exist"));
+    }
+
+    public String register(Customer newCustomer){
         // Input validation
+        Boolean existed = repo.findByUserName(newCustomer.getUsername()).isPresent();
+        if(existed){
+            throw new IllegalStateException("User existed!");
+        }
+
         Character newCustomerGender = toLowerCase(newCustomer.getSex());
         LocalDate newCustomerDob = newCustomer.getDob();
         Integer newCustomerPin = newCustomer.getPin();
@@ -42,7 +57,10 @@ public class CustomerService {
             throw new IllegalStateException("Invalid pin!");
         }
 
+        String encodedPassword = bCryptPasswordEncoder.encode(newCustomer.getPassword());
+        newCustomer.setPassword(encodedPassword);
         repo.save(newCustomer);
+        return "User created with id: "+newCustomer.getId();
     }
 
     @Transactional
@@ -59,4 +77,5 @@ public class CustomerService {
                 .orElseThrow(()->new IllegalStateException("Customer doesn't exist!"));
         repo.delete(targetCustomer);
     }
+
 }

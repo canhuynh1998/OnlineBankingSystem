@@ -1,6 +1,9 @@
 package SelfBankingSystem.SelfBankingSystem.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,19 +23,41 @@ public class CustomerController {
         return customerService.getCustomers();
     }
 
+
+    @GetMapping(path = "{customerId}")
+    public Customer getCustomer(@PathVariable Long customerId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer target = (Customer) authentication.getPrincipal();
+        if(target.getId() != customerId){
+            throw new SecurityException("Invalid Request!");
+        }
+        return customerService.getCustomer(customerId);
+    }
+
     @PostMapping
     public void registerCustomer(@RequestBody Customer newCustomer){
-        customerService.addNewCustomer(newCustomer);
+        customerService.register(newCustomer);
     }
 
     @PutMapping(path = "{customerId}")
+
     public void updateCustomer(@PathVariable Long customerId,
                                 @RequestParam(required = false) Integer newPin) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer target = (Customer) authentication.getPrincipal();
+        if(target.getId() != customerId){
+            throw new IllegalStateException("Invalid Request!");
+        }
         customerService.updateCustomer(customerId, newPin);
     }
 
     @DeleteMapping(path = "{customerId}")
     public void deleteCustomer(@PathVariable Long customerId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Customer target = (Customer) authentication.getPrincipal();
+        if(target.getId() != customerId){
+            throw new IllegalStateException("Invalid Request!");
+        }
         customerService.deleteCustomer(customerId);
     }
 }
