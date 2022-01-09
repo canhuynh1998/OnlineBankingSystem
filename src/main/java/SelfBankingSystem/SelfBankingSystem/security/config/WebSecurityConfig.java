@@ -22,16 +22,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()  // white list URLs
                 .antMatchers("/api/v1/registration").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/customer",true)
                 .and()
                 .logout()
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID");
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login");
     }
 
     @Override

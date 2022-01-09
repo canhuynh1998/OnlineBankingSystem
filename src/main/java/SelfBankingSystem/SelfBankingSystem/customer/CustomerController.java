@@ -18,46 +18,33 @@ public class CustomerController {
         this.customerService = service;
     }
 
-    @GetMapping
+    @GetMapping(path = "all")
     public List<Customer> getCustomers(){
         return customerService.getCustomers();
     }
 
-
-    @GetMapping(path = "{customerId}")
-    public Customer getCustomer(@PathVariable Long customerId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new SecurityException("Invalid Request!");
-        }
-        return customerService.getCustomer(customerId);
+    private Customer getCurrentLoggedInUser(){
+        return (Customer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
-
+    @GetMapping
+    public Customer getCustomer(){
+        Customer target = getCurrentLoggedInUser();
+        return customerService.getCustomer(target.getId());
+    }
     @PostMapping
     public void registerCustomer(@RequestBody Customer newCustomer){
         customerService.register(newCustomer);
     }
 
-    @PutMapping(path = "{customerId}")
-
-    public void updateCustomer(@PathVariable Long customerId,
-                                @RequestParam(required = false) Integer newPin) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        customerService.updateCustomer(customerId, newPin);
+    @PutMapping
+    public void updateCustomer(@RequestParam(required = false) Integer newPin) {
+        Customer target = getCurrentLoggedInUser();
+        customerService.updateCustomer(target.getId(), newPin);
     }
 
-    @DeleteMapping(path = "{customerId}")
-    public void deleteCustomer(@PathVariable Long customerId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        customerService.deleteCustomer(customerId);
+    @DeleteMapping
+    public void deleteCustomer(){
+        Customer target = getCurrentLoggedInUser();
+        customerService.deleteCustomer(target.getId());
     }
 }

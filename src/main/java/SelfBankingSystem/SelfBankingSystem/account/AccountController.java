@@ -23,70 +23,47 @@ public class AccountController {
         return accountService.getAllAccounts();
     }
 
-    @GetMapping(path = "{customerId}")
-    public List<Account> getAllAccountsByCustomerId(@PathVariable(value = "customerId") Long customerId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        return accountService.getAllAccountsByCustomerId(customerId);
+    private Customer getCurrentLoggedInUser(){
+        return (Customer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
-    @PostMapping(path="{customerId}")
-    public void createAccount(@PathVariable(value="customerId") Long customerId,
-                              @RequestBody Account account){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        accountService.createAccount(customerId, account);
+    @GetMapping
+    public List<Account> getAllAccountsByCustomerId(){
+        Customer target = getCurrentLoggedInUser();
+        return accountService.getAllAccountsByCustomerId(target.getId());
     }
 
-    @PutMapping(path = "{customerId}/deposit")
-    public void depositAccount(@PathVariable(value="customerId") Long customerId,
-                               @RequestParam(required = true) Integer accountType,
+    @PostMapping
+    public void createAccount(@RequestBody Account account){
+        Customer target = getCurrentLoggedInUser();
+        accountService.createAccount(target.getId(), account);
+    }
+
+    @PutMapping(path = "deposit/{accountType}")
+    public void depositAccount(@PathVariable(required = true) Integer accountType,
                                @RequestParam(required = true) Integer amount){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        accountService.depositAccount(customerId, accountType, amount);
+        Customer target = getCurrentLoggedInUser();
+        accountService.depositAccount(target.getId(), accountType, amount);
     }
 
-    @PutMapping(path = "{customerId}/withdraw")
-    public void withdrawAccount(@PathVariable(value="customerId") Long customerId,
-                               @RequestParam(required = true) Integer accountType,
-                               @RequestParam(required = true) Integer amount){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        accountService.withdrawAccount(customerId, accountType, amount);
+    @PutMapping(path = "withdraw/{accountType}")
+    public void withdrawAccount(@PathVariable(required = true) Integer accountType,
+                                @RequestParam(required = true) Integer amount){
+        Customer target = getCurrentLoggedInUser();
+        accountService.withdrawAccount(target.getId(), accountType, amount);
     }
 
-    @PutMapping(path = "{customerId}/active")
-    public void lockOrUnlockAccount(@PathVariable(value="customerId") Long customerId,
-                                @RequestParam(required = true) Integer accountType){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        accountService.lockOrUnlockAccount(customerId, accountType);
+    @PutMapping(path = "active/{accountType}")
+    public void lockOrUnlockAccount(@PathVariable(required = true) Integer accountType){
+        Customer target = getCurrentLoggedInUser();
+        accountService.lockOrUnlockAccount(target.getId(), accountType);
     }
 
-    @DeleteMapping(path = "{customerId}")
-    public void deleteAccount(@PathVariable(value="customerId") Long customerId,
-                                @RequestParam(required=true) Integer accountType){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Customer target = (Customer) authentication.getPrincipal();
-        if(target.getId() != customerId){
-            throw new IllegalStateException("Invalid Request!");
-        }
-        accountService.deleteAccount(customerId, accountType);
+    @DeleteMapping(path = "{accountType}")
+    public void deleteAccount(@PathVariable(required = true) Integer accountType){
+        Customer target = getCurrentLoggedInUser();
+        accountService.deleteAccount(target.getId(), accountType);
     }
+
+
 }
