@@ -18,7 +18,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping
+    @GetMapping("all")
     public List<Account> getAllAccounts(){
         return accountService.getAllAccounts();
     }
