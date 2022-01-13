@@ -32,9 +32,9 @@ public class AccountService {
                 .orElseThrow(()->new IllegalStateException("Customer doesn't exist"));
 
         Optional<Account> accountNumber = accountRepository.findByNumber(account.getNumber());
-        Optional<Account> accountId = accountRepository.findById(account.getId());
 
-        if(accountNumber.isPresent() || accountId.isPresent()){
+
+        if(accountNumber.isPresent()){
             throw new IllegalStateException("Account Number/ID existed!");
         }
 

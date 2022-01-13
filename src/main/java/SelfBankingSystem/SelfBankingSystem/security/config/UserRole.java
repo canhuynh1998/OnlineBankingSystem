@@ -1,4 +1,4 @@
-package SelfBankingSystem.SelfBankingSystem.customer;
+package SelfBankingSystem.SelfBankingSystem.security.config;
 
 public enum UserRole {
     USER,

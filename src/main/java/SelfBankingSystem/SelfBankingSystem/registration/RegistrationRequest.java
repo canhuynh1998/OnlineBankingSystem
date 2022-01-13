@@ -1,6 +1,5 @@
 package SelfBankingSystem.SelfBankingSystem.registration;
 
-import SelfBankingSystem.SelfBankingSystem.customer.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

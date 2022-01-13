@@ -2,6 +2,7 @@ package SelfBankingSystem.SelfBankingSystem.account;
 
 import SelfBankingSystem.SelfBankingSystem.customer.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,8 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @GetMapping("all")
+    @GetMapping(path = "all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public List<Account> getAllAccounts(){
         return accountService.getAllAccounts();
     }
@@ -33,17 +35,21 @@ public class AccountController {
         return accountService.getAllAccountsByCustomerId(target.getId());
     }
 
-    @PostMapping
-    public void createAccount(@RequestBody Account account){
+    @PostMapping(path = "create/{accountType}")
+    public void createAccount(@PathVariable(required = true) Integer accountType){
         Customer target = getCurrentLoggedInUser();
+        Account account = new Account(0L, accountType);
+        System.out.println("Hit with "+accountType);
         accountService.createAccount(target.getId(), account);
     }
 
     @PutMapping(path = "deposit/{accountType}")
     public void depositAccount(@PathVariable(required = true) Integer accountType,
-                               @RequestParam(required = true) Integer amount){
+                               @RequestBody(required = true) String amount){
         Customer target = getCurrentLoggedInUser();
-        accountService.depositAccount(target.getId(), accountType, amount);
+        System.out.println("Amount before parsing: "+amount);
+        Integer amount_ = Integer.parseInt(amount);
+        accountService.depositAccount(target.getId(), accountType, amount_);
     }
 
     @PutMapping(path = "withdraw/{accountType}")

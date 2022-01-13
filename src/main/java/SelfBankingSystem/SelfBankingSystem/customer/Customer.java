@@ -1,4 +1,5 @@
 package SelfBankingSystem.SelfBankingSystem.customer;
+import SelfBankingSystem.SelfBankingSystem.security.config.UserRole;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

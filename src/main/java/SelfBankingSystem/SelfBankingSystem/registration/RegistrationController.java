@@ -16,4 +16,9 @@ public class RegistrationController {
     public String register(@RequestBody RegistrationRequest request){
         return registrationService.register(request);
     }
+
+    @PostMapping("admin")
+    public String register_admin(@RequestBody RegistrationRequest request){
+        return registrationService.register_admin(request);
+    }
 }
