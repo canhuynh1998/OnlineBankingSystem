@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class TemplateController {
-    @GetMapping("/")
+    @GetMapping
     public String getHomePageView(){
-        return "index";
+        return "register";
     }
 
     @GetMapping("login")

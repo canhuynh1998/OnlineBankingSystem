@@ -32,9 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()  // white list URLs
+                .antMatchers("/", "index", "/css/*", "/js/*", "register").permitAll()  // white list URLs
                 .antMatchers("/api/v1/registration/**").permitAll()
-                .antMatchers("/customer").fullyAuthenticated()
+                .antMatchers("/customer").not().anonymous()
                 .anyRequest()
                 .authenticated()
                 .and()
