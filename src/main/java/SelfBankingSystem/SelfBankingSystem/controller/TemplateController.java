@@ -1,5 +1,6 @@
 package SelfBankingSystem.SelfBankingSystem.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class TemplateController {
-    @GetMapping("/")
+    @GetMapping
     public String getHomePageView(){
-        return "index";
+        return "register";
     }
 
     @GetMapping("login")
@@ -18,6 +19,7 @@ public class TemplateController {
     }
 
     @GetMapping("customer")
+//    @PreAuthorize("hasRole('ROLE_ADMIN','ROLE_USER')")
     public String getCustomerView(){
         return "customer";
     }

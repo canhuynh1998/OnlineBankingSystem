@@ -1,0 +1,56 @@
+body {
+   display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+       flex-grow: 1;
+    background-color: #3e3e3e;
+    color: white;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding:0;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+
+.button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+}
+
+.button1{
+    margin: 15px;
+}
+
+.input-box{
+    padding-left:15px;
+    padding-right:0;
+    padding-top:15px;
+    padding-bottom:15px;
+}
+
+.amount-column{
+    border: none;
+    padding-right:0;
+    padding-left:10px;
+    padding-top:10px;
+    padding-bottom:10px;
+}

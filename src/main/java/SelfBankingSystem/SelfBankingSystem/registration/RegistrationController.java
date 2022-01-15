@@ -14,6 +14,12 @@ public class RegistrationController {
 
     @PostMapping
     public String register(@RequestBody RegistrationRequest request){
+        System.out.println("In here");
         return registrationService.register(request);
+    }
+
+    @PostMapping("admin")
+    public String register_admin(@RequestBody RegistrationRequest request){
+        return registrationService.register_admin(request);
     }
 }

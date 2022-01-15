@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Banking System</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        body {
+          background-color: #3e3e3e;
+          color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <form action="/login">
+        <h2 class="form-heading">Register Account</h2>
+
+        <p>
+            <label for="name">Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Enter Your Name" required="true">
+        </p>
+
+        <p> Sex:
+            <br>
+            <input type="radio" id="male" name="sex" required="true" value="M">
+            <label for="male">Male</label>
+
+            <input type="radio" id="female" name="sex" value="F">
+            <label for="male">Female</label>
+        </p>
+        <p>
+            <label for="dob">Date of Birth</label>
+            <input type=date id="dob" class="form-control" required="true">
+        </p>
+        <p>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="password" class="form-control" placeholder="Enter Username" required="true">
+        </p>
+
+        <p>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" required="true">
+        </p>
+
+        <p>
+            <label for="pin">Pin</label>
+            <input type="password" id="pin"  class="form-control" placeholder="Enter Pin" required="true">
+        </p>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="sign-up">Sign Up</button>
+    </form>
+</div>
+
+<script>
+    console.log("Connected");
+const signUp = document.getElementById("sign-up");
+signUp.addEventListener('click', () =>{
+
+
+    const name = document.getElementById('name').value;
+    const sex = document.getElementById('male').checked? 'M': 'F';
+    const dob = document.getElementById('dob').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const pin = document.getElementById('pin').value;
+    const url =  'api/v1/registration';
+    console.log(url);
+    const newUser = {
+    "name": name,
+    "sex": sex,
+    "dob": dob,
+    "userName": username,
+    "password": password,
+    "pin": pin
+}
+fetch(url, {
+    method:'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( newUser )
+})
+.then(res=>res.json())
+.then(data=> console.log(data));
+
+})
+</script>
+
+</body>
+<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>

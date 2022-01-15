@@ -7,44 +7,47 @@
     <title>Banking System</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet" crossorigin="anonymous">
-    <style>
-        body {
-          background-color: #3e3e3e;
-          color: white;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-<div class="container">
-    <table>
+<form class="container" action="#" >
+    <p>Hello, <span id="name"></span></p>
+    <table id="customer">
         <tr>
-            <th>Name </th>
-            <th> Sex </th>
-            <th> User name </th>
+            <th>Type</th>
+            <th>Number</th>
+            <th>Balance</th>
         </tr>
         <tr>
-            <td id="name"> </td>
-            <td id="sex"> </td>
-            <td id="username"> </td>
+            <td>Saving</td>
+            <td id="saving-number"></td>
+            <td id="saving-balance"></td>
+            <td id="saving-amount"><input class = "input-box" id = "amount-saving" type="number" min="0"/></td>
+            <td class = "operation"><button class ="btn btn-sm btn-success" id="saving-deposit" >Deposit</button> </td>
+            <td class = "operation"><button class ="btn btn-sm btn-success" id="saving-withdraw" >Withdraw</button> </td>
+            <td class = "operation"><button class ="btn btn-sm btn-warning" id="saving-deactivate">Deactivate</button> </td>
+            <td class = "operation"><button class ="btn btn-sm btn-warning" id="saving-delete">Delete</button> </td>
+        </tr>
+        <tr>
+            <td>Checking</td>
+            <td id="checking-number"></td>
+            <td id="checking-balance"></td>
+            <td id="checking-amount"><input class = "input-box" id = "amount-checking" type="number" min="0"/></td>
+            <td class = "operation"><button class ="btn btn-sm btn-success" id="checking-deposit">Deposit</button> </td>
+            <td class = "operation"><button class ="btn btn-sm btn-success" id="checking-withdraw">Withdraw</button></td>
+            <td class = "operation"><button class ="btn btn-sm btn-warning" id="checking-deactivate">Deactivate</button> </td>
+            <td class = "operation"><button class ="btn btn-sm btn-warning" id="checking-delete">Delete</button> </td>
         </tr>
     </table>
-
-</div>
-
-<script>
-getText("api/v1/customer");
-
-async function getText(url) {
-
-fetch(url)
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("name").innerHTML = data.name;
-        document.getElementById("sex").innerHTML = data.sex;
-        document.getElementById("username").innerHTML = data.username;
-    });
-}
+    <div class="button-container">
+        <button class ="btn btn-lg btn-info button1" id ="saving-create" >Create Saving Account</button>
+        <button class ="btn btn-lg btn-info button1" id ="checking-create">Create Checking Account</button>
+    </div>
+    <button class="btn btn-lg btn-danger" type="submit" formmethod="post" formaction="/logout">Log Out</button>
+</form>
+<script src="/customer.js">
 </script>
+
 </body>
 <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
 </html>

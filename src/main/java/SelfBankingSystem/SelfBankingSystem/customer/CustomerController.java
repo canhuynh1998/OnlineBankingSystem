@@ -1,6 +1,7 @@
 package SelfBankingSystem.SelfBankingSystem.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ public class CustomerController {
     }
 
     @GetMapping(path = "all")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public List<Customer> getCustomers(){
         return customerService.getCustomers();
     }

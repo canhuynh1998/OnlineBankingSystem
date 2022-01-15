@@ -10,7 +10,7 @@ import javax.persistence.*;
         name="account",
         uniqueConstraints = {
                 @UniqueConstraint(
-                        columnNames = { "Number", "Id" }
+                        columnNames = { "Number"}
                 )
         }
         )
@@ -22,7 +22,7 @@ public class Account {
             name="account_sequence",
             sequenceName ="account_sequence",
             allocationSize = 1,
-            initialValue = 10000
+            initialValue = 100000000
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -33,12 +33,6 @@ public class Account {
             nullable = false
     )
     private Long number;
-
-    @Column(
-            name="Id",
-            nullable = false
-    )
-    private Long id;
 
     @Column(
             name="Balance",
@@ -68,8 +62,7 @@ public class Account {
     )
     private Customer customer;
 
-    public Account(Long id ,Long balance, Integer type) {
-        this.id = id;
+    public Account(Long balance, Integer type) {
         this.balance = balance;
         this.type = type;
     }
