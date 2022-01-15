@@ -59,9 +59,10 @@ public class AccountController {
         accountService.withdrawAccount(target.getId(), accountType, amount_);
     }
 
-    @PutMapping(path = "activate/{accountType}")
+    @PutMapping(path = "deactivate/{accountType}")
     public void lockOrUnlockAccount(@PathVariable(required = true) Integer accountType){
         Customer target = getCurrentLoggedInUser();
+        System.out.println("Deactivated!");
         accountService.lockOrUnlockAccount(target.getId(), accountType);
     }
 

@@ -1,5 +1,5 @@
 getName("api/v1/customer");
-
+  getAccountInfo('api/v1/account');
 const savingCreate = document.getElementById('saving-create');
 savingCreate.addEventListener('click', () => {
     createAccount('1');
@@ -81,6 +81,7 @@ fetch(url)
     .then(response => response.json())
     .then(data => {
         if(data.length === 0){
+
             document.getElementById("checking-number").innerHTML = "";
             document.getElementById("checking-balance").innerHTML = "";
             document.getElementById("saving-number").innerHTML = "";
@@ -90,9 +91,11 @@ fetch(url)
                 if(element.type === 0){
                     document.getElementById("checking-number").innerHTML = element.number;
                     document.getElementById("checking-balance").innerHTML = element.balance;
+                    checkingCreate.disabled = true;
                 }else{
                     document.getElementById("saving-number").innerHTML = element.number;
                     document.getElementById("saving-balance").innerHTML = element.balance;
+                    savingCreate.disabled = true;
                 }
            })
         }
@@ -131,7 +134,7 @@ async function deactivate(typeOfAccount){
               method: 'PUT',
               headers: {
                     'Content-Type': 'application/json '
-                  },
+                  }
             });
             console.log('Completed!', response);
             getAccountInfo('api/v1/account');

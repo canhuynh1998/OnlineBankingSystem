@@ -19,7 +19,7 @@ public class TemplateController {
     }
 
     @GetMapping("customer")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PreAuthorize("hasRole('ROLE_ADMIN','ROLE_USER')")
     public String getCustomerView(){
         return "customer";
     }
